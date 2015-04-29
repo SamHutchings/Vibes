@@ -1,13 +1,12 @@
 <resources>
-
-    <!-- Strings related to login -->
+    <!-- Register  -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_register_phone_number">Register Phone Number</string>
+    <string name="register_explanation">
+        Please enter your phone number below. When you click register, an SMS will be sent
+        to your device to verify the number belongs to you
+    </string>
 
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
+    
 </resources>
