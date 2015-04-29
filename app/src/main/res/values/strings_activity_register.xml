@@ -8,6 +8,9 @@
         Please enter your phone number below. When you click register, an SMS will be sent
         to your device to verify the number belongs to you
     </string>
+    <string name="register_error">
+        We were unable to verify your phone number. Please try again
+    </string>
 
 
 </resources>
