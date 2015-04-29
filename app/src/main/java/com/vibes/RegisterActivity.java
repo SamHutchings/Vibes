@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * RegisterActivity screen that gives the user the option to register their phone number.
  */
-public class RegisterActivity extends Activity implements LoaderCallbacks<Cursor> {
+public class RegisterActivity extends Activity {
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -73,11 +73,6 @@ public class RegisterActivity extends Activity implements LoaderCallbacks<Cursor
         mProgressView = findViewById(R.id.login_progress);
     }
 
-    private void populateAutoComplete() {
-        getLoaderManager().initLoader(0, null, this);
-    }
-
-
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -98,20 +93,9 @@ public class RegisterActivity extends Activity implements LoaderCallbacks<Cursor
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+        if (!TextUtils.isEmpty(phoneNumber)) {
+            mPhoneNumberView.setError(getString(R.string.error_invalid_phoneNumber));
+            focusView = mPhoneNumberView;
             cancel = true;
         }
 
@@ -178,8 +162,7 @@ public class RegisterActivity extends Activity implements LoaderCallbacks<Cursor
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
+            // TODO: API call to register
             try {
                 // Simulate network access.
                 Thread.sleep(2000);
@@ -187,7 +170,7 @@ public class RegisterActivity extends Activity implements LoaderCallbacks<Cursor
                 return false;
             }
 
-            // TODO: register the new account here.
+            // TODO: redirect to main activity
             return true;
         }
 

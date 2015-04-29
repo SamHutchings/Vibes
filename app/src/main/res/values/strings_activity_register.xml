@@ -11,6 +11,7 @@
     <string name="register_error">
         We were unable to verify your phone number. Please try again
     </string>
+    <string name="error_invalid_phoneNumber">Please enter a valid phone number</string>
 
 
 </resources>
