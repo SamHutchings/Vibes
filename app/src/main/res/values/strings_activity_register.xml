@@ -1,12 +1,12 @@
 <resources>
-    <!-- Register  -->
+    <!-- RegisterActivity  -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
-    <string name="action_register_phone_number">Register Phone Number</string>
+    <string name="action_register_phone_number">Verify Phone Number</string>
     <string name="register_text_placeholder">Enter your phone number</string>
     <string name="register_explanation">
-        Please enter your phone number below. When you click register, an SMS will be sent
-        to your device to verify the number belongs to you
+        Please enter your phone number below. When you click verify, an SMS will be sent
+        to your device to ensure the number belongs to you
     </string>
     <string name="register_error">
         We were unable to verify your phone number. Please try again
