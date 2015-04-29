@@ -31,7 +31,7 @@ import java.util.List;
 
 
 /**
- * A login screen that offers login via email/password.
+ * Register screen that gives the user the option to register their phone number.
  */
 public class Register extends Activity implements LoaderCallbacks<Cursor> {
 
@@ -57,10 +57,6 @@ public class Register extends Activity implements LoaderCallbacks<Cursor> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
