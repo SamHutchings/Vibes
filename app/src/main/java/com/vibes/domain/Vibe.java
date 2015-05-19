@@ -10,11 +10,11 @@ public class Vibe {
     private Contact ContactId;
     private Boolean Sent;
 
-    public VibeType getVibeType(){
+    public VibeType getVibeType() {
         return Type;
     }
 
-    public void setVibeType(VibeType type){
+    public void setVibeType(VibeType type) {
         this.Type = type;
     }
 

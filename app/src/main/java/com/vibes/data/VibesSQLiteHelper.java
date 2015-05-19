@@ -16,6 +16,7 @@ public class VibesSQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_VIBE_VIBETYPE = "vibetype";
     public static final String COLUMN_VIBE_SENT = "sent";
     public static final String COLUMN_CONTACT_PHONENUMBER = "phonenumber";
+    public static final String COLUMN_CONTACT_USERNAME = "username";
 
     private static final String DATABASE_NAME = "vibes.db";
     private static final int DATABASE_VERSION = 1;
@@ -31,6 +32,7 @@ public class VibesSQLiteHelper extends SQLiteOpenHelper {
     private static final String CREATE_CONTACTS = "create table "
             + TABLE_CONTACT + "(" + COLUMN_ID
             + " integer primary key autoincrement, " + COLUMN_CONTACT_PHONENUMBER
+            + " text not null, " + COLUMN_CONTACT_USERNAME
             + " text not null);";
 
     public VibesSQLiteHelper(Context context) {
