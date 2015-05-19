@@ -23,9 +23,10 @@ public class VibesSQLiteHelper extends SQLiteOpenHelper {
     private static final String CREATE_VIBES = "create table "
             + TABLE_VIBE + "(" + COLUMN_ID
             + " integer primary key autoincrement, " + COLUMN_VIBE_CONTACTID
-            + " text not null, " + COLUMN_VIBE_SENT
-            + " bit not null, " + COLUMN_VIBE_VIBETYPE
-            + " text not null);";
+            + " integer not null, " + COLUMN_VIBE_SENT
+            + " integer not null, " + COLUMN_VIBE_VIBETYPE
+            + " text not null, "
+            + " FOREIGN KEY(" + COLUMN_VIBE_CONTACTID + ") REFERENCES " + TABLE_CONTACT + "(" + COLUMN_ID + ")";
 
     private static final String CREATE_CONTACTS = "create table "
             + TABLE_CONTACT + "(" + COLUMN_ID
