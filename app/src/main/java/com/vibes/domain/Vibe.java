@@ -7,7 +7,7 @@ import com.vibes.enums.VibeType;
  */
 public class Vibe {
     private VibeType Type;
-    private String ContactId;
+    private int ContactId;
     private Boolean Sent;
 
     public VibeType getVibeType(){
@@ -18,11 +18,11 @@ public class Vibe {
         this.Type = type;
     }
 
-    public String getContactId(){
+    public int getContactId(){
         return ContactId;
     }
 
-    public void setContactId(String contactId){
+    public void setContactId(int contactId){
         this.ContactId = contactId;
     }
 
