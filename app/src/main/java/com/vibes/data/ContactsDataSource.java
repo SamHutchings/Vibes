@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Provides methods for retrieving and updating contact information
+ * Exposes methods for retrieving and updating contact information
  */
 public class ContactsDataSource {
     // Database fields
