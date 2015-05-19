@@ -9,17 +9,27 @@ import android.util.Log;
  * Sql helper for the vibes DB
  */
 public class VibesSQLiteHelper extends SQLiteOpenHelper {
-    public static final String TABLE_COMMENTS = "comments";
+    public static final String TABLE_VIBE = "comments";
+    public static final String TABLE_CONTACT = "comments";
     public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_COMMENT = "comment";
+    public static final String COLUMN_VIBE_CONTACTID = "contactid";
+    public static final String COLUMN_VIBE_VIBETYPE = "vibetype";
+    public static final String COLUMN_VIBE_SENT = "sent";
+    public static final String COLUMN_CONTACT_PHONENUMBER = "phonenumber";
 
-    private static final String DATABASE_NAME = "commments.db";
+    private static final String DATABASE_NAME = "vibes.db";
     private static final int DATABASE_VERSION = 1;
 
-    // Database creation sql statement
-    private static final String DATABASE_CREATE = "create table "
-            + TABLE_COMMENTS + "(" + COLUMN_ID
-            + " integer primary key autoincrement, " + COLUMN_COMMENT
+    private static final String CREATE_VIBES = "create table "
+            + TABLE_VIBE + "(" + COLUMN_ID
+            + " integer primary key autoincrement, " + COLUMN_VIBE_CONTACTID
+            + " text not null, " + COLUMN_VIBE_SENT
+            + " bit not null, " + COLUMN_VIBE_VIBETYPE
+            + " text not null);";
+
+    private static final String CREATE_CONTACTS = "create table "
+            + TABLE_CONTACT + "(" + COLUMN_ID
+            + " integer primary key autoincrement, " + COLUMN_CONTACT_PHONENUMBER
             + " text not null);";
 
     public VibesSQLiteHelper(Context context) {
@@ -28,7 +38,8 @@ public class VibesSQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        database.execSQL(DATABASE_CREATE);
+        database.execSQL(CREATE_VIBES);
+        database.execSQL(CREATE_CONTACTS);
     }
 
     @Override
@@ -36,7 +47,8 @@ public class VibesSQLiteHelper extends SQLiteOpenHelper {
         Log.w(VibesSQLiteHelper.class.getName(),
                 "Upgrading database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data");
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMMENTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_VIBE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACT);
         onCreate(db);
     }
 }
