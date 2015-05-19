@@ -70,7 +70,7 @@ public class RegisterActivity extends Activity {
         });
 
         mLoginFormView = findViewById(R.id.register_form);
-        mProgressView = findViewById(R.id.login_progress);
+        //mProgressView = findViewById(R.id.login_progress);
     }
 
     /**
@@ -182,7 +182,7 @@ public class RegisterActivity extends Activity {
             if (success) {
                 finish();
             } else {
-                mPhoneNumberView.setError(getString(R.string.error_incorrect_password));
+                mPhoneNumberView.setError(getString(R.string.register_error));
                 mPhoneNumberView.requestFocus();
             }
         }
