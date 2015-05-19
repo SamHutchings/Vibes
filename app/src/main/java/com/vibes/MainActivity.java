@@ -5,8 +5,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.vibes.data.ContactsDataSource;
+import com.vibes.data.VibesDataSource;
 
+/*
+    The main screen for the app
+ */
 public class MainActivity extends ActionBarActivity {
+
+    private VibesDataSource vibesDataSource;
+    private ContactsDataSource contactsDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
