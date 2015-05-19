@@ -10,7 +10,7 @@ import java.util.Collection;
 public interface IVibesAPI {
 
     /*
-    Sends a list of contacts to the web service 
+    Sends a list of contacts to the web service
      */
     Collection<Contact> sendContactList(Collection<Integer> phoneNumbers);
 
