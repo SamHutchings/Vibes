@@ -1,9 +1,15 @@
 package com.vibes.data;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.vibes.domain.Contact;
+
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provides methods for retrieving and updating contact information
@@ -28,48 +34,51 @@ public class ContactsDataSource {
         dbHelper.close();
     }
 
-    public Comment createComment(String comment) {
+    public Contact createContact(Contact contact) {
         ContentValues values = new ContentValues();
-        values.put(VibesSQLiteHelper.COLUMN_COMMENT, comment);
-        long insertId = database.insert(MySQLiteHelper.TABLE_COMMENTS, null,
+        values.put(VibesSQLiteHelper.COLUMN_CONTACT_PHONENUMBER, contact.getPhoneNumber());
+        values.put(VibesSQLiteHelper.COLUMN_CONTACT_USERNAME, contact.getUsername());
+        long insertId = database.insert(VibesSQLiteHelper.TABLE_CONTACT, null,
                 values);
-        Cursor cursor = database.query(MySQLiteHelper.TABLE_COMMENTS,
-                allColumns, MySQLiteHelper.COLUMN_ID + " = " + insertId, null,
+        Cursor cursor = database.query(VibesSQLiteHelper.TABLE_CONTACT,
+                allColumns, VibesSQLiteHelper.COLUMN_ID + " = " + insertId, null,
                 null, null, null);
+
         cursor.moveToFirst();
-        Comment newComment = cursorToComment(cursor);
+        Contact newContact = cursorToContact(cursor);
         cursor.close();
-        return newComment;
+        return newContact;
     }
 
-    public void deleteComment(Comment comment) {
-        long id = comment.getId();
-        System.out.println("Comment deleted with id: " + id);
-        database.delete(MySQLiteHelper.TABLE_COMMENTS, MySQLiteHelper.COLUMN_ID
+    public void deleteContact(Contact contact) {
+        long id = contact.getId();
+        System.out.println("Contact deleted with id: " + id);
+        database.delete(VibesSQLiteHelper.TABLE_CONTACT, VibesSQLiteHelper.COLUMN_ID
                 + " = " + id, null);
     }
 
-    public List<Comment> getAllComments() {
-        List<Comment> comments = new ArrayList<Comment>();
+    public List<Contact> getAllContacts() {
+        List<Contact> contacts = new ArrayList<Contact>();
 
-        Cursor cursor = database.query(MySQLiteHelper.TABLE_COMMENTS,
+        Cursor cursor = database.query(VibesSQLiteHelper.TABLE_CONTACT,
                 allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Comment comment = cursorToComment(cursor);
-            comments.add(comment);
+            Contact contact = cursorToContact(cursor);
+            contacts.add(contact);
             cursor.moveToNext();
         }
         // make sure to close the cursor
         cursor.close();
-        return comments;
+        return contacts;
     }
 
-    private Comment cursorToComment(Cursor cursor) {
-        Comment comment = new Comment();
-        comment.setId(cursor.getLong(0));
-        comment.setComment(cursor.getString(1));
-        return comment;
+    private Contact cursorToContact(Cursor cursor) {
+        Contact contact = new Contact();
+        contact.setId(cursor.getLong(0));
+        contact.setPhoneNumber(cursor.getString(1));
+        contact.setUsername(cursor.getString(2));
+        return contact;
     }
 }
