@@ -1,7 +1,7 @@
 package com.vibes.services;
 
-/**
- * Created by Sam on 16/06/2015.
- */
+import com.google.android.gms.gcm.GcmListenerService;
+
 public class VibesGcmListenerService extends GcmListenerService {
+
 }
