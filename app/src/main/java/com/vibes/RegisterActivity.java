@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -47,30 +48,44 @@ public class RegisterActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
 
-        mPhoneNumberView = (EditText) findViewById(R.id.phoneNumber);
-        mPhoneNumberView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.register || id == EditorInfo.IME_NULL) {
-                    attemptVerify();
-                    return true;
+        SharedPreferences settings = getPreferences(0);
+        String guid = settings.getString("deviceGuid", null);
+
+        if(guid != null && !guid.isEmpty()) {
+            openMainActivity();
+        }
+        else {
+
+            setContentView(R.layout.activity_register);
+
+            mPhoneNumberView = (EditText) findViewById(R.id.phoneNumber);
+            mPhoneNumberView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                    if (id == R.id.register || id == EditorInfo.IME_NULL) {
+                        attemptVerify();
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
 
-        Button mRegisterPhoneNumberButton = (Button) findViewById(R.id.register_phone_number_button);
-        mRegisterPhoneNumberButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptVerify();
-            }
-        });
+            Button mRegisterPhoneNumberButton = (Button) findViewById(R.id.register_phone_number_button);
+            mRegisterPhoneNumberButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    attemptVerify();
+                }
+            });
 
-        mLoginFormView = findViewById(R.id.register_form);
-        //mProgressView = findViewById(R.id.login_progress);
+            mLoginFormView = findViewById(R.id.register_form);
+            //mProgressView = findViewById(R.id.login_progress);
+        }
+    }
+
+    void openMainActivity(){
+
     }
 
     /**
