@@ -42,6 +42,8 @@ public class RegisterActivity extends Activity {
      */
     private UserRegisterTask mAuthTask = null;
 
+    private String deviceGuidSettingName;
+
     // UI references.
     private EditText mPhoneNumberView;
     private View mProgressView;
@@ -51,11 +53,15 @@ public class RegisterActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences settings = getPreferences(0);
-        String guid = settings.getString(R.string.device_guid_variable_name, null);
+        deviceGuidSettingName = getResources().getString(R.string.device_guid_variable_name);
 
-        if(guid != null && !guid.isEmpty()) {
+        SharedPreferences settings = getPreferences(0);
+        String deviceGuid = settings.getString(deviceGuidSettingName, null);
+
+        if(deviceGuid != null && !deviceGuid.isEmpty()) {
             openMainActivity();
+
+            return;
         }
         else {
 
@@ -188,7 +194,7 @@ public class RegisterActivity extends Activity {
             }
 
             SharedPreferences settings = getPreferences(0);
-            settings.putString(R.string.device_guid_variable_name, UUID.randomUUID().toString());
+            settings.putString(deviceGuidSettingName, UUID.randomUUID().toString());
 
             openMainActivity();
 
