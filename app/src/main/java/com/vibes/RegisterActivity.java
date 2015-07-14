@@ -58,12 +58,11 @@ public class RegisterActivity extends Activity {
         SharedPreferences settings = getPreferences(0);
         String deviceGuid = settings.getString(deviceGuidSettingName, null);
 
-        if(deviceGuid != null && !deviceGuid.isEmpty()) {
+        if (deviceGuid != null && !deviceGuid.isEmpty()) {
             openMainActivity();
 
             return;
-        }
-        else {
+        } else {
 
             setContentView(R.layout.activity_register);
 
@@ -92,7 +91,7 @@ public class RegisterActivity extends Activity {
         }
     }
 
-    void openMainActivity(){
+    void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
     }
 
@@ -194,7 +193,9 @@ public class RegisterActivity extends Activity {
             }
 
             SharedPreferences settings = getPreferences(0);
-            settings.putString(deviceGuidSettingName, UUID.randomUUID().toString());
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString(deviceGuidSettingName, UUID.randomUUID().toString());
+            editor.commit();
 
             openMainActivity();
 
