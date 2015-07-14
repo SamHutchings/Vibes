@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -51,7 +52,7 @@ public class RegisterActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         SharedPreferences settings = getPreferences(0);
-        String guid = settings.getString("deviceGuid", null);
+        String guid = settings.getString(R.string.device_guid_variable_name, null);
 
         if(guid != null && !guid.isEmpty()) {
             openMainActivity();
@@ -186,7 +187,11 @@ public class RegisterActivity extends Activity {
                 return false;
             }
 
-            // TODO: redirect to main activity
+            SharedPreferences settings = getPreferences(0);
+            settings.putString(R.string.device_guid_variable_name, UUID.randomUUID().toString());
+
+            openMainActivity();
+
             return true;
         }
 

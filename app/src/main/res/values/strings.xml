@@ -1,5 +1,8 @@
 <resources>
+    <!-- Global settings -->
     <string name="app_name">Vibes</string>
+    <string name="device_guid__variable_name">deviceGuid</string>
+
     <string name="title_activity_main">MainActivity</string>
 
     <string name="action_settings">Settings</string>
