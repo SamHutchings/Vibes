@@ -93,6 +93,8 @@ public class RegisterActivity extends Activity {
 
     void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
+
+        startActivity(intent);
     }
 
     /**
@@ -115,7 +117,7 @@ public class RegisterActivity extends Activity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(phoneNumber)) {
+        if (TextUtils.isEmpty(phoneNumber)) {
             mPhoneNumberView.setError(getString(R.string.error_invalid_phoneNumber));
             focusView = mPhoneNumberView;
             cancel = true;
@@ -128,7 +130,7 @@ public class RegisterActivity extends Activity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
+            //showProgress(true);
             mAuthTask = new UserRegisterTask(phoneNumber);
             mAuthTask.execute((Void) null);
         }
