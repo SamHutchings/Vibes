@@ -1,11 +1,13 @@
 package com.vibes;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.NavUtils;
+import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,15 +23,26 @@ import java.util.Locale;
 /*
     The main screen for the app
  */
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
     private VibesDataSource vibesDataSource;
     private ContactsDataSource contactsDataSource;
 
+    SectionsPagerAdapter mSectionsPagerAdapter;
+    ViewPager mViewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final ActionBar actionBar = getActionBar();
+
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the app.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.main_activity);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
         setContentView(R.layout.activity_main);
     }
 
