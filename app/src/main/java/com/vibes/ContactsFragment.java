@@ -11,6 +11,11 @@ import android.widget.TextView;
 
 import com.vibes.data.ContactsDataSource;
 import com.vibes.data.VibesDataSource;
+import com.vibes.domain.Contact;
+import com.vibes.domain.Vibe;
+import com.vibes.enums.VibeType;
+
+import java.util.Calendar;
 
 /**
  * Activity for the contacts page
@@ -19,16 +24,36 @@ public class ContactsFragment extends Fragment {
     private VibesDataSource mVibesDataSource;
     private ContactsDataSource mContactsDataSource;
 
-    public ContactsFragment() { }
+    public ContactsFragment() {
+        mVibesDataSource = new VibesDataSource(getActivity());
+        mContactsDataSource = new ContactsDataSource(getActivity());
+    }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-            View rootView = inflater.inflate(R.layout.contacts_fragment, container, false);
-            TextView friendsTextView = (TextView) rootView.findViewById(R.id.contacts_label);
-            friendsTextView.setText("CONTACTS");
-            return rootView;
+        View rootView = inflater.inflate(R.layout.contacts_fragment, container, false);
+
+        Vibe vibe = new Vibe();
+        Contact contact = new Contact();
+
+        contact.setUsername("mr test " + Calendar.getInstance().get(Calendar.SECOND));
+
+        vibe.setVibeType(VibeType.Good);
+        vibe.setContact(contact);
+
+        mVibesDataSource.createVibe(vibe);
+
+        String test = "";
+
+        for (Vibe item : mVibesDataSource.getAllVibes()) {
+            test += (" " + vibe.getContact().getUsername());
         }
+
+        TextView friendsTextView = (TextView) rootView.findViewById(R.id.contacts_label);
+        friendsTextView.setText(test);
+        return rootView;
+    }
 
 }
