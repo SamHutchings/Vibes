@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.vibes.data.ContactsDataSource;
 import com.vibes.data.VibesDataSource;
@@ -24,6 +25,8 @@ public class FriendsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.friends_fragment, container, false);
+        TextView friendsTextView = (TextView) rootView.findViewById(R.id.friends_label);
+        friendsTextView.setText("FRIENDS");
         return rootView;
     }
 }
