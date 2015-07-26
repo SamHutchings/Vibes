@@ -64,10 +64,13 @@ public class MainActivity extends FragmentActivity {
             switch (position) {
                 case 0:
                     fragment = new FriendsFragment();
+                    break;
                 case 1:
                     fragment = new VibesFragment();
+                    break;
                 case 2:
                     fragment = new ContactsFragment();
+                    break;
             }
 
             return fragment;
