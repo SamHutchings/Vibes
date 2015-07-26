@@ -13,7 +13,7 @@ import com.vibes.data.VibesDataSource;
 public class ContactsActivity extends Activity {
     private VibesDataSource vibesDataSource;
     private ContactsDataSource contactsDataSource;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

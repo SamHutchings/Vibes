@@ -5,6 +5,10 @@
 
     <string name="title_activity_main">MainActivity</string>
 
+    <string name="friends_menu_title">Friends</string>
+    <string name="contacts_menu_title">Contacts</string>
+    <string name="vibes_menu_title">Vibes</string>
+
     <string name="action_settings">Settings</string>
     <string name="title_activity_open">OpenActivity</string>
 
