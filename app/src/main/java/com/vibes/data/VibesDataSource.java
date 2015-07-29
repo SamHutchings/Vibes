@@ -38,8 +38,8 @@ public class VibesDataSource {  // Database fields
 
     public Vibe createVibe(Vibe vibe) {
         ContentValues values = new ContentValues();
-        values.put(VibesSQLiteHelper.COLUMN_VIBE_CONTACTID, vibe.getContact().getId());
-        //TODO: SET VIBE TYPE
+        values.put(VibesSQLiteHelper.COLUMN_VIBE_CONTACTID, vibe.getContactId());
+        values.put(VibesSQLiteHelper.COLUMN_VIBE_VIBETYPE, vibe.getVibeType().toString());
         values.put(VibesSQLiteHelper.COLUMN_VIBE_SENT, vibe.getSent());
         long insertId = database.insert(VibesSQLiteHelper.TABLE_VIBE, null,
                 values);

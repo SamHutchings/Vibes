@@ -39,16 +39,19 @@ public class ContactsFragment extends Fragment {
         Contact contact = new Contact();
 
         contact.setUsername("mr test " + Calendar.getInstance().get(Calendar.SECOND));
+        contact.setPhoneNumber("1701570157");
+
+        mContactsDataSource.createContact(contact);
 
         vibe.setVibeType(VibeType.Good);
-        vibe.setContact(contact);
+        vibe.setContact(contact.getId());
 
         mVibesDataSource.createVibe(vibe);
 
         String test = "";
 
         for (Vibe item : mVibesDataSource.getAllVibes()) {
-            test += (" " + vibe.getContact().getUsername());
+            test += (" " + vibe.getContactId());
         }
 
         TextView friendsTextView = (TextView) rootView.findViewById(R.id.contacts_label);
