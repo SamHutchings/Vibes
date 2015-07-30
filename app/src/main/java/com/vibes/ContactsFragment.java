@@ -15,6 +15,7 @@ import com.vibes.domain.Contact;
 import com.vibes.domain.Vibe;
 import com.vibes.enums.VibeType;
 
+import java.sql.SQLException;
 import java.util.Calendar;
 
 /**
@@ -24,14 +25,12 @@ public class ContactsFragment extends Fragment {
     private VibesDataSource mVibesDataSource;
     private ContactsDataSource mContactsDataSource;
 
-    public ContactsFragment() {
-        mVibesDataSource = new VibesDataSource(getActivity());
-        mContactsDataSource = new ContactsDataSource(getActivity());
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        mVibesDataSource = new VibesDataSource(getActivity());
+        mContactsDataSource = new ContactsDataSource(getActivity());
 
         View rootView = inflater.inflate(R.layout.contacts_fragment, container, false);
 
@@ -41,18 +40,28 @@ public class ContactsFragment extends Fragment {
         contact.setUsername("mr test " + Calendar.getInstance().get(Calendar.SECOND));
         contact.setPhoneNumber("1701570157");
 
-        mContactsDataSource.createContact(contact);
+        try {
+            mVibesDataSource.open();
+            mContactsDataSource.open();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        contact = mContactsDataSource.createContact(contact);
 
         vibe.setVibeType(VibeType.Good);
         vibe.setContact(contact.getId());
 
-        mVibesDataSource.createVibe(vibe);
+        vibe = mVibesDataSource.createVibe(vibe);
 
         String test = "";
 
         for (Vibe item : mVibesDataSource.getAllVibes()) {
             test += (" " + vibe.getContactId());
         }
+
+        mVibesDataSource.close();
+        mContactsDataSource.close();
 
         TextView friendsTextView = (TextView) rootView.findViewById(R.id.contacts_label);
         friendsTextView.setText(test);

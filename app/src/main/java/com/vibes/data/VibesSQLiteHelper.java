@@ -9,8 +9,8 @@ import android.util.Log;
  * Sql helper for the vibes DB
  */
 public class VibesSQLiteHelper extends SQLiteOpenHelper {
-    public static final String TABLE_VIBE = "comments";
-    public static final String TABLE_CONTACT = "comments";
+    public static final String TABLE_VIBE = "vibe";
+    public static final String TABLE_CONTACT = "contact";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_VIBE_CONTACTID = "contactid";
     public static final String COLUMN_VIBE_VIBETYPE = "vibetype";
@@ -27,7 +27,7 @@ public class VibesSQLiteHelper extends SQLiteOpenHelper {
             + " integer not null, " + COLUMN_VIBE_SENT
             + " integer not null, " + COLUMN_VIBE_VIBETYPE
             + " text not null, "
-            + " FOREIGN KEY(" + COLUMN_VIBE_CONTACTID + ") REFERENCES " + TABLE_CONTACT + "(" + COLUMN_ID + ")";
+            + " FOREIGN KEY(" + COLUMN_VIBE_CONTACTID + ") REFERENCES " + TABLE_CONTACT + "(" + COLUMN_ID + "))";
 
     private static final String CREATE_CONTACTS = "create table "
             + TABLE_CONTACT + "(" + COLUMN_ID
