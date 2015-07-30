@@ -77,6 +77,25 @@ public class VibesDataSource {  // Database fields
         return vibes;
     }
 
+    public List<Vibe> getLast5Vibes() {
+
+        List<Vibe> vibes = new ArrayList<Vibe>();
+
+        Cursor cursor = database.query(VibesSQLiteHelper.TABLE_VIBE,
+                allColumns, null, null, null, null, null);
+
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Vibe vibe = cursorToVibe(cursor);
+            vibes.add(vibe);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+        return vibes;
+    }
+
     private Vibe cursorToVibe(Cursor cursor) {
         Vibe vibe = new Vibe();
         //TODO: GET CONTACT
