@@ -64,7 +64,7 @@ public class VibesDataSource {  // Database fields
         List<Vibe> vibes = new ArrayList<Vibe>();
 
         Cursor cursor = database.query(VibesSQLiteHelper.TABLE_VIBE,
-                allColumns, null, null, null, null, null);
+                allColumns, null, null, null, VibesSQLiteHelper.COLUMN_VIBE_SENT + " DESC", "5");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
