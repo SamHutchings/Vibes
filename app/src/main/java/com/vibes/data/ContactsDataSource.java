@@ -57,6 +57,16 @@ public class ContactsDataSource {
                 + " = " + id, null);
     }
 
+    public Contact getContact(long id) {
+        Cursor cursor = database.query(VibesSQLiteHelper.TABLE_CONTACT,
+                allColumns, VibesSQLiteHelper.COLUMN_ID + " = " + id, null,
+                null, null, null);
+
+        cursor.moveToFirst();
+
+        return cursorToContact(cursor);
+    }
+
     public List<Contact> getAllContacts() {
         List<Contact> contacts = new ArrayList<Contact>();
 

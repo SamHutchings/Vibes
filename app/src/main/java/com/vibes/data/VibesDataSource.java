@@ -19,6 +19,8 @@ import java.util.List;
 public class VibesDataSource {  // Database fields
     private SQLiteDatabase database;
     private VibesSQLiteHelper dbHelper;
+    private ContactsDataSource mContactsDataSource;
+
     private String[] allColumns = {VibesSQLiteHelper.COLUMN_ID,
             VibesSQLiteHelper.COLUMN_VIBE_CONTACTID,
             VibesSQLiteHelper.COLUMN_VIBE_VIBETYPE,
@@ -26,6 +28,7 @@ public class VibesDataSource {  // Database fields
 
     public VibesDataSource(Context context) {
         dbHelper = new VibesSQLiteHelper(context);
+        mContactsDataSource = new ContactsDataSource(context);
     }
 
     public void open() throws SQLException {
@@ -60,6 +63,16 @@ public class VibesDataSource {  // Database fields
                 + " = " + id, null);
     }
 
+    public Vibe getVibe(long id) {
+        Cursor cursor = database.query(VibesSQLiteHelper.TABLE_VIBE,
+                allColumns, VibesSQLiteHelper.COLUMN_ID + " = " + id, null,
+                null, null, null);
+
+        cursor.moveToFirst();
+
+        return cursorToVibe(cursor);
+    }
+
     public List<Vibe> getAllVibes() {
         List<Vibe> vibes = new ArrayList<Vibe>();
 
@@ -84,7 +97,6 @@ public class VibesDataSource {  // Database fields
         Cursor cursor = database.query(VibesSQLiteHelper.TABLE_VIBE,
                 allColumns, null, null, null, null, null);
 
-
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Vibe vibe = cursorToVibe(cursor);
@@ -98,7 +110,7 @@ public class VibesDataSource {  // Database fields
 
     private Vibe cursorToVibe(Cursor cursor) {
         Vibe vibe = new Vibe();
-        //TODO: GET CONTACT
+        Contact contact = mContactsDataSource.getContact(cursor.getLong(1));
         vibe.setId(cursor.getLong(0));
         vibe.setVibeType(VibeType.valueOf(cursor.getString(2)));
         vibe.setSent(cursor.getInt(3) != 0);
