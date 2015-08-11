@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vibes.domain.Contact;
+import com.vibes.domain.Friend;
 import com.vibes.domain.Vibe;
 import com.vibes.enums.VibeType;
 
@@ -19,16 +19,16 @@ import java.util.List;
 public class VibesDataSource {  // Database fields
     private SQLiteDatabase database;
     private VibesSQLiteHelper dbHelper;
-    private ContactsDataSource mContactsDataSource;
+    private FriendsDataSource mFriendsDataSource;
 
     private String[] allColumns = {VibesSQLiteHelper.COLUMN_ID,
-            VibesSQLiteHelper.COLUMN_VIBE_CONTACTID,
+            VibesSQLiteHelper.COLUMN_VIBE_FRIENDID,
             VibesSQLiteHelper.COLUMN_VIBE_VIBETYPE,
             VibesSQLiteHelper.COLUMN_VIBE_SENT};
 
     public VibesDataSource(Context context) {
         dbHelper = new VibesSQLiteHelper(context);
-        mContactsDataSource = new ContactsDataSource(context);
+        mFriendsDataSource = new FriendsDataSource(context);
     }
 
     public void open() throws SQLException {
@@ -41,7 +41,7 @@ public class VibesDataSource {  // Database fields
 
     public Vibe createVibe(Vibe vibe) {
         ContentValues values = new ContentValues();
-        values.put(VibesSQLiteHelper.COLUMN_VIBE_CONTACTID, vibe.getContactId());
+        values.put(VibesSQLiteHelper.COLUMN_VIBE_FRIENDID, vibe.getContactId());
         values.put(VibesSQLiteHelper.COLUMN_VIBE_VIBETYPE, vibe.getVibeType().toString());
         values.put(VibesSQLiteHelper.COLUMN_VIBE_SENT, vibe.getSent());
         long insertId = database.insert(VibesSQLiteHelper.TABLE_VIBE, null,
@@ -110,7 +110,7 @@ public class VibesDataSource {  // Database fields
 
     private Vibe cursorToVibe(Cursor cursor) {
         Vibe vibe = new Vibe();
-        Contact contact = mContactsDataSource.getContact(cursor.getLong(1));
+        Friend friend = mFriendsDataSource.getContact(cursor.getLong(1));
         vibe.setId(cursor.getLong(0));
         vibe.setVibeType(VibeType.valueOf(cursor.getString(2)));
         vibe.setSent(cursor.getInt(3) != 0);

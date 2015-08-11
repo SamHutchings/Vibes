@@ -1,7 +1,5 @@
 package com.vibes;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.vibes.data.ContactsDataSource;
+import com.vibes.data.FriendsDataSource;
 import com.vibes.data.VibesDataSource;
 import com.vibes.services.DisconnectedVibesAPI;
 
@@ -18,7 +16,7 @@ import com.vibes.services.DisconnectedVibesAPI;
  */
 public class FriendsFragment extends Fragment {
     private VibesDataSource vibesDataSource;
-    private ContactsDataSource contactsDataSource;
+    private FriendsDataSource friendsDataSource;
     private DisconnectedVibesAPI api;
 
     @Override
