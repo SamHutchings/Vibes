@@ -12,7 +12,7 @@ public class VibesSQLiteHelper extends SQLiteOpenHelper {
     public static final String TABLE_VIBE = "vibe";
     public static final String TABLE_FRIEND = "friend";
     public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_VIBE_FRIENDID = "friendid";
+    public static final String COLUMN_VIBE_FRIENDID = "contactid";
     public static final String COLUMN_VIBE_VIBETYPE = "vibetype";
     public static final String COLUMN_VIBE_SENT = "sent";
     public static final String COLUMN_FRIEND_PHONENUMBER = "phonenumber";

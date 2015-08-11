@@ -110,10 +110,19 @@ public class VibesDataSource {  // Database fields
 
     private Vibe cursorToVibe(Cursor cursor) {
         Vibe vibe = new Vibe();
-        Friend friend = mFriendsDataSource.getContact(cursor.getLong(1));
-        vibe.setId(cursor.getLong(0));
-        vibe.setVibeType(VibeType.valueOf(cursor.getString(2)));
-        vibe.setSent(cursor.getInt(3) != 0);
+        try {
+            mFriendsDataSource.open();
+            Friend friend = mFriendsDataSource.getContact(cursor.getLong(1));
+            vibe.setId(cursor.getLong(0));
+            vibe.setVibeType(VibeType.valueOf(cursor.getString(2)));
+            vibe.setSent(cursor.getInt(3) != 0);
+        }
+        catch (SQLException e){
+
+        }
+
+        mFriendsDataSource.close();
+
         return vibe;
     }
 }
