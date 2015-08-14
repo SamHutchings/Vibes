@@ -45,29 +45,29 @@ public class FriendsDataSource {
                 null, null, null);
 
         cursor.moveToFirst();
-        Friend newContact = cursorToContact(cursor);
+        Friend newFriend = cursorToFriend(cursor);
         cursor.close();
-        return newContact;
+        return newFriend;
     }
 
-    public void deleteContact(Friend friend) {
+    public void deleteFriend(Friend friend) {
         long id = friend.getId();
         System.out.println("Friend deleted with id: " + id);
         database.delete(VibesSQLiteHelper.TABLE_FRIEND, VibesSQLiteHelper.COLUMN_ID
                 + " = " + id, null);
     }
 
-    public Friend getContact(long id) {
+    public Friend getFriend(long id) {
         Cursor cursor = database.query(VibesSQLiteHelper.TABLE_FRIEND,
                 allColumns, VibesSQLiteHelper.COLUMN_ID + " = " + id, null,
                 null, null, null);
 
         cursor.moveToFirst();
 
-        return cursorToContact(cursor);
+        return cursorToFriend(cursor);
     }
 
-    public List<Friend> getAllContacts() {
+    public List<Friend> getAllFriends() {
         List<Friend> friends = new ArrayList<Friend>();
 
         Cursor cursor = database.query(VibesSQLiteHelper.TABLE_FRIEND,
@@ -75,7 +75,7 @@ public class FriendsDataSource {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Friend friend = cursorToContact(cursor);
+            Friend friend = cursorToFriend(cursor);
             friends.add(friend);
             cursor.moveToNext();
         }
@@ -84,7 +84,7 @@ public class FriendsDataSource {
         return friends;
     }
 
-    private Friend cursorToContact(Cursor cursor) {
+    private Friend cursorToFriend(Cursor cursor) {
         Friend friend = new Friend();
         friend.setId(cursor.getLong(0));
         friend.setPhoneNumber(cursor.getString(1));

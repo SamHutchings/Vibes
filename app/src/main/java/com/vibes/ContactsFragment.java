@@ -41,6 +41,7 @@ public class ContactsFragment extends Fragment {
 
     void sendVibe()
     {
+        Friend friend = mFriendsDataSource.getContact()
         Vibe newVibe = new Vibe();
     }
 
