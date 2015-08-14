@@ -17,9 +17,6 @@ import java.util.Locale;
  */
 public class MainActivity extends FragmentActivity {
 
-    private VibesDataSource vibesDataSource;
-    private FriendsDataSource friendsDataSource;
-
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
 

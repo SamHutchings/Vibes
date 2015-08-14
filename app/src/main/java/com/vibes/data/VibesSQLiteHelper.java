@@ -10,7 +10,7 @@ import android.util.Log;
  */
 public class VibesSQLiteHelper extends SQLiteOpenHelper {
     public static final String TABLE_VIBE = "vibe";
-    public static final String TABLE_FRIEND = "friend";
+    public static final String TABLE_FRIEND = "contact";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_VIBE_FRIENDID = "contactid";
     public static final String COLUMN_VIBE_VIBETYPE = "vibetype";

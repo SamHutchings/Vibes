@@ -13,8 +13,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <Button android:id="@+id/sendvibebutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send Vibe" />
+    <ListView
+        android:id="@+id/top5_vibes_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+    </ListView>
 </RelativeLayout>

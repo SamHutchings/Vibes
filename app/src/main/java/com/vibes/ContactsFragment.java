@@ -2,6 +2,7 @@ package com.vibes;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,10 @@ import com.vibes.data.FriendsDataSource;
 import com.vibes.data.VibesDataSource;
 import com.vibes.domain.Friend;
 import com.vibes.domain.Vibe;
+import com.vibes.enums.VibeType;
 
+import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -46,16 +50,40 @@ public class ContactsFragment extends Fragment {
     {
         Friend friendToSend;
 
-        List<Friend> friends = mFriendsDataSource.getAllFriends();
+        try {
+            mFriendsDataSource.open();
+            mVibesDataSource.open();
+            List<Friend> friends = mFriendsDataSource.getAllFriends();
 
-        if(friends.isEmpty()) {
-            Friend friend = new Friend();
-            friend.setPhoneNumber("07931204393");
-            friend.setUsername("Sam");
+            if (friends.isEmpty()) {
+                Friend friend = new Friend();
+                friend.setPhoneNumber("07931204393");
+                friend.setUsername("Sam");
 
-            friendToSend = mFriendsDataSource.createFriend(friend);
+                friendToSend = mFriendsDataSource.createFriend(friend);
+            } else {
+                friendToSend = friends.get(0);
+            }
+
+            Vibe newVibe = new Vibe();
+            newVibe.setContact(friendToSend.getId());
+            Calendar c = Calendar.getInstance();
+            int seconds = c.get(Calendar.SECOND);
+
+            if (seconds % 2 == 0) {
+
+                newVibe.setVibeType(VibeType.Good);
+            } else {
+                newVibe.setVibeType(VibeType.Bad);
+            }
+
+            newVibe.setSent(true);
+
+            newVibe = mVibesDataSource.createVibe(newVibe);
         }
-        Vibe newVibe = new Vibe();
-    }
+        catch (SQLException e){
 
+            Log.w("vibes", "CONTACTS FRAGMNET FAILED");
+        }
+    }
 }
