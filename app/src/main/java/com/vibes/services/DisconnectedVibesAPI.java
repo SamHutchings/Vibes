@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Test version of IVibesAPI, will return ideal values
  */
-public class DisconnectedVibesAPI {
+public class DisconnectedVibesAPI implements IVibesAPI {
 
     /*
     Will return a contact for each phone number provided

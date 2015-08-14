@@ -13,7 +13,7 @@ public class VibesAPI implements IVibesAPI {
 
     private static final String serviceUrl = "";
 
-    public Collection<Friend> sendContactList(Collection<Integer> phoneNumbers) {
+    public Collection<Friend> sendContactList(Collection<String> phoneNumbers) {
         return new ArrayList<Friend>();
     }
 

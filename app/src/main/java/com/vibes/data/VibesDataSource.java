@@ -112,7 +112,7 @@ public class VibesDataSource {  // Database fields
         Vibe vibe = new Vibe();
         try {
             mFriendsDataSource.open();
-            Friend friend = mFriendsDataSource.getContact(cursor.getLong(1));
+            Friend friend = mFriendsDataSource.getFriend(cursor.getLong(1));
             vibe.setId(cursor.getLong(0));
             vibe.setVibeType(VibeType.valueOf(cursor.getString(2)));
             vibe.setSent(cursor.getInt(3) != 0);

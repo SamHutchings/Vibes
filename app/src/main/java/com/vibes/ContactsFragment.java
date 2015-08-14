@@ -9,7 +9,10 @@ import android.widget.Button;
 
 import com.vibes.data.FriendsDataSource;
 import com.vibes.data.VibesDataSource;
+import com.vibes.domain.Friend;
 import com.vibes.domain.Vibe;
+
+import java.util.List;
 
 /**
  * Activity for the contacts page
@@ -41,7 +44,17 @@ public class ContactsFragment extends Fragment {
 
     void sendVibe()
     {
-        Friend friend = mFriendsDataSource.getContact()
+        Friend friendToSend;
+
+        List<Friend> friends = mFriendsDataSource.getAllFriends();
+
+        if(friends.isEmpty()) {
+            Friend friend = new Friend();
+            friend.setPhoneNumber("07931204393");
+            friend.setUsername("Sam");
+
+            friendToSend = mFriendsDataSource.createFriend(friend);
+        }
         Vibe newVibe = new Vibe();
     }
 

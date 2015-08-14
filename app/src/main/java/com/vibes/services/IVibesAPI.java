@@ -12,7 +12,7 @@ public interface IVibesAPI {
     /*
     Sends a list of contacts to the web service
      */
-    Collection<Friend> sendContactList(Collection<Integer> phoneNumbers);
+    Collection<Friend> sendContactList(Collection<String> phoneNumbers);
 
     /*
     Send the given vibe to the contact mentioned
