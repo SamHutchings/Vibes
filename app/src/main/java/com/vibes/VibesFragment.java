@@ -33,7 +33,7 @@ public class VibesFragment extends Fragment {
         mVibesDataSource = new VibesDataSource(getActivity());
         mFriendsDataSource = new FriendsDataSource(getActivity());
 
-        mTop5VibeList = (ListView) getView().findViewById(R.id.top5_vibes_list);
+        mTop5VibeList = (ListView) rootView.findViewById(R.id.top5_vibes_list);
         List<Vibe> topVibes = new ArrayList<Vibe>();
         try {
             mVibesDataSource.open();

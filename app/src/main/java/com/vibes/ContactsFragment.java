@@ -32,7 +32,7 @@ public class ContactsFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.contacts_fragment, container, false);
 
-        mSendVibeButton = (Button) getView().findViewById(R.id.sendvibebutton);
+        mSendVibeButton = (Button) rootView.findViewById(R.id.sendvibebutton);
 
         mVibesDataSource = new VibesDataSource(getActivity());
         mFriendsDataSource = new FriendsDataSource(getActivity());
