@@ -73,7 +73,6 @@ public class ContactsFragment extends Fragment {
             int seconds = c.get(Calendar.SECOND);
 
             if (seconds % 2 == 0) {
-
                 newVibe.setVibeType(VibeType.Good);
             } else {
                 newVibe.setVibeType(VibeType.Bad);
