@@ -95,7 +95,7 @@ public class VibesDataSource {  // Database fields
         List<Vibe> vibes = new ArrayList<Vibe>();
 
         Cursor cursor = database.query(VibesSQLiteHelper.TABLE_VIBE,
-                allColumns, null, null, null, null, null);
+                allColumns, null, null, null, null, VibesSQLiteHelper.COLUMN_ID + " DESC", "5");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -116,8 +116,8 @@ public class VibesDataSource {  // Database fields
             vibe.setId(cursor.getLong(0));
             vibe.setVibeType(VibeType.valueOf(cursor.getString(2)));
             vibe.setSent(cursor.getInt(3) != 0);
-        }
-        catch (SQLException e){
+            vibe.sentFriend(friend);
+        } catch (SQLException e) {
 
         }
 

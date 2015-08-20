@@ -31,4 +31,9 @@ public class Friend {
     public void setUsername(String username) {
         this.Username = username;
     }
+
+    @Override
+    public String toString() {
+        return this.Username + " at " + this.PhoneNumber;
+    }
 }

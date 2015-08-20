@@ -17,6 +17,7 @@ import com.vibes.enums.VibeType;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Activity for the contacts page
@@ -46,8 +47,7 @@ public class ContactsFragment extends Fragment {
         return rootView;
     }
 
-    void sendVibe()
-    {
+    void sendVibe() {
         Friend friendToSend;
 
         try {
@@ -62,9 +62,11 @@ public class ContactsFragment extends Fragment {
 
                 friendToSend = mFriendsDataSource.createFriend(friend);
             } else {
-                friendToSend = friends.get(0);
-            }
+                Random r = new Random();
+                int i1 = r.nextInt(friends.size() + 1);
 
+                friendToSend = friends.get(i1);
+            }
             Vibe newVibe = new Vibe();
             newVibe.setContact(friendToSend.getId());
             Calendar c = Calendar.getInstance();
@@ -80,8 +82,7 @@ public class ContactsFragment extends Fragment {
             newVibe.setSent(true);
 
             newVibe = mVibesDataSource.createVibe(newVibe);
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
 
             Log.w("vibes", "CONTACTS FRAGMNET FAILED");
         }

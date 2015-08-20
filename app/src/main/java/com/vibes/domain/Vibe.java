@@ -10,6 +10,7 @@ public class Vibe {
     private VibeType Type;
     private long ContactId;
     private Boolean Sent;
+    private Friend friend;
 
     public long getId() {
         return id;
@@ -41,5 +42,18 @@ public class Vibe {
 
     public void setSent(Boolean sent) {
         this.Sent = sent;
+    }
+
+    public Friend getFriend() {
+        return friend;
+    }
+
+    public void sentFriend(Friend friend) {
+        this.friend = friend;
+    }
+
+    @Override
+    public String toString() {
+        return this.Type + " vibe " + this.id + " to " + this.getFriend().toString();
     }
 }
