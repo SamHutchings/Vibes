@@ -3,7 +3,7 @@ package com.vibes.domain;
 /**
  * Represents a contact using vibes
  */
-public class Contact {
+public class Friend {
     private long id;
     private String PhoneNumber;
     private String Username;
@@ -30,5 +30,10 @@ public class Contact {
 
     public void setUsername(String username) {
         this.Username = username;
+    }
+
+    @Override
+    public String toString() {
+        return this.Username + " at " + this.PhoneNumber;
     }
 }
