@@ -6,7 +6,9 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -27,6 +29,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -39,6 +42,8 @@ public class RegisterActivity extends Activity {
      */
     private UserRegisterTask mAuthTask = null;
 
+    private String deviceGuidSettingName;
+
     // UI references.
     private EditText mPhoneNumberView;
     private View mProgressView;
@@ -47,30 +52,49 @@ public class RegisterActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
 
-        mPhoneNumberView = (EditText) findViewById(R.id.phoneNumber);
-        mPhoneNumberView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.register || id == EditorInfo.IME_NULL) {
-                    attemptVerify();
-                    return true;
+        deviceGuidSettingName = getResources().getString(R.string.device_guid_variable_name);
+
+        SharedPreferences settings = getPreferences(0);
+        String deviceGuid = settings.getString(deviceGuidSettingName, null);
+
+        if (deviceGuid != null && !deviceGuid.isEmpty()) {
+            openMainActivity();
+
+            return;
+        } else {
+
+            setContentView(R.layout.activity_register);
+
+            mPhoneNumberView = (EditText) findViewById(R.id.phoneNumber);
+            mPhoneNumberView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                    if (id == R.id.register || id == EditorInfo.IME_NULL) {
+                        attemptVerify();
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
 
-        Button mRegisterPhoneNumberButton = (Button) findViewById(R.id.register_phone_number_button);
-        mRegisterPhoneNumberButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptVerify();
-            }
-        });
+            Button mRegisterPhoneNumberButton = (Button) findViewById(R.id.register_phone_number_button);
+            mRegisterPhoneNumberButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    attemptVerify();
+                }
+            });
 
-        mLoginFormView = findViewById(R.id.register_form);
-        //mProgressView = findViewById(R.id.login_progress);
+            mLoginFormView = findViewById(R.id.register_form);
+            //mProgressView = findViewById(R.id.login_progress);
+        }
+    }
+
+    void openMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+
+        startActivity(intent);
     }
 
     /**
@@ -93,7 +117,7 @@ public class RegisterActivity extends Activity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(phoneNumber)) {
+        if (TextUtils.isEmpty(phoneNumber)) {
             mPhoneNumberView.setError(getString(R.string.error_invalid_phoneNumber));
             focusView = mPhoneNumberView;
             cancel = true;
@@ -106,7 +130,7 @@ public class RegisterActivity extends Activity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
+            //showProgress(true);
             mAuthTask = new UserRegisterTask(phoneNumber);
             mAuthTask.execute((Void) null);
         }
@@ -170,7 +194,13 @@ public class RegisterActivity extends Activity {
                 return false;
             }
 
-            // TODO: redirect to main activity
+            SharedPreferences settings = getPreferences(0);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString(deviceGuidSettingName, UUID.randomUUID().toString());
+            editor.commit();
+
+            openMainActivity();
+
             return true;
         }
 

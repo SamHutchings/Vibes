@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vibes.domain.Contact;
+import com.vibes.domain.Friend;
 import com.vibes.domain.Vibe;
 import com.vibes.enums.VibeType;
 
@@ -19,13 +19,16 @@ import java.util.List;
 public class VibesDataSource {  // Database fields
     private SQLiteDatabase database;
     private VibesSQLiteHelper dbHelper;
+    private FriendsDataSource mFriendsDataSource;
+
     private String[] allColumns = {VibesSQLiteHelper.COLUMN_ID,
-            VibesSQLiteHelper.COLUMN_VIBE_CONTACTID,
+            VibesSQLiteHelper.COLUMN_VIBE_FRIENDID,
             VibesSQLiteHelper.COLUMN_VIBE_VIBETYPE,
             VibesSQLiteHelper.COLUMN_VIBE_SENT};
 
     public VibesDataSource(Context context) {
         dbHelper = new VibesSQLiteHelper(context);
+        mFriendsDataSource = new FriendsDataSource(context);
     }
 
     public void open() throws SQLException {
@@ -38,8 +41,8 @@ public class VibesDataSource {  // Database fields
 
     public Vibe createVibe(Vibe vibe) {
         ContentValues values = new ContentValues();
-        values.put(VibesSQLiteHelper.COLUMN_VIBE_CONTACTID, vibe.getContact().getId());
-        //TODO: SET VIBE TYPE
+        values.put(VibesSQLiteHelper.COLUMN_VIBE_FRIENDID, vibe.getContactId());
+        values.put(VibesSQLiteHelper.COLUMN_VIBE_VIBETYPE, vibe.getVibeType().toString());
         values.put(VibesSQLiteHelper.COLUMN_VIBE_SENT, vibe.getSent());
         long insertId = database.insert(VibesSQLiteHelper.TABLE_VIBE, null,
                 values);
@@ -60,11 +63,39 @@ public class VibesDataSource {  // Database fields
                 + " = " + id, null);
     }
 
+    public Vibe getVibe(long id) {
+        Cursor cursor = database.query(VibesSQLiteHelper.TABLE_VIBE,
+                allColumns, VibesSQLiteHelper.COLUMN_ID + " = " + id, null,
+                null, null, null);
+
+        cursor.moveToFirst();
+
+        return cursorToVibe(cursor);
+    }
+
     public List<Vibe> getAllVibes() {
         List<Vibe> vibes = new ArrayList<Vibe>();
 
         Cursor cursor = database.query(VibesSQLiteHelper.TABLE_VIBE,
-                allColumns, null, null, null, null, null);
+                allColumns, null, null, null, VibesSQLiteHelper.COLUMN_VIBE_SENT + " DESC", "5");
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Vibe vibe = cursorToVibe(cursor);
+            vibes.add(vibe);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+        return vibes;
+    }
+
+    public List<Vibe> getLast5Vibes() {
+
+        List<Vibe> vibes = new ArrayList<Vibe>();
+
+        Cursor cursor = database.query(VibesSQLiteHelper.TABLE_VIBE,
+                allColumns, null, null, null, null, VibesSQLiteHelper.COLUMN_ID + " DESC", "5");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -79,10 +110,19 @@ public class VibesDataSource {  // Database fields
 
     private Vibe cursorToVibe(Cursor cursor) {
         Vibe vibe = new Vibe();
-        //TODO: GET CONTACT
-        vibe.setId(cursor.getLong(0));
-        vibe.setVibeType(VibeType.valueOf(cursor.getString(2)));
-        vibe.setSent(cursor.getInt(3) != 0);
+        try {
+            mFriendsDataSource.open();
+            Friend friend = mFriendsDataSource.getFriend(cursor.getLong(1));
+            vibe.setId(cursor.getLong(0));
+            vibe.setVibeType(VibeType.valueOf(cursor.getString(2)));
+            vibe.setSent(cursor.getInt(3) != 0);
+            vibe.sentFriend(friend);
+        } catch (SQLException e) {
+
+        }
+
+        mFriendsDataSource.close();
+
         return vibe;
     }
 }

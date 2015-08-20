@@ -8,8 +8,9 @@ import com.vibes.enums.VibeType;
 public class Vibe {
     private long id;
     private VibeType Type;
-    private Contact ContactId;
+    private long ContactId;
     private Boolean Sent;
+    private Friend friend;
 
     public long getId() {
         return id;
@@ -27,11 +28,11 @@ public class Vibe {
         this.Type = type;
     }
 
-    public Contact getContact() {
+    public long getContactId() {
         return ContactId;
     }
 
-    public void setContact(Contact contactId) {
+    public void setContact(long contactId) {
         this.ContactId = contactId;
     }
 
@@ -41,5 +42,18 @@ public class Vibe {
 
     public void setSent(Boolean sent) {
         this.Sent = sent;
+    }
+
+    public Friend getFriend() {
+        return friend;
+    }
+
+    public void sentFriend(Friend friend) {
+        this.friend = friend;
+    }
+
+    @Override
+    public String toString() {
+        return this.Type + " vibe " + this.id + " to " + this.getFriend().toString();
     }
 }

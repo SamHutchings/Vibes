@@ -9,30 +9,30 @@ import android.util.Log;
  * Sql helper for the vibes DB
  */
 public class VibesSQLiteHelper extends SQLiteOpenHelper {
-    public static final String TABLE_VIBE = "comments";
-    public static final String TABLE_CONTACT = "comments";
+    public static final String TABLE_VIBE = "vibe";
+    public static final String TABLE_FRIEND = "contact";
     public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_VIBE_CONTACTID = "contactid";
+    public static final String COLUMN_VIBE_FRIENDID = "contactid";
     public static final String COLUMN_VIBE_VIBETYPE = "vibetype";
     public static final String COLUMN_VIBE_SENT = "sent";
-    public static final String COLUMN_CONTACT_PHONENUMBER = "phonenumber";
-    public static final String COLUMN_CONTACT_USERNAME = "username";
+    public static final String COLUMN_FRIEND_PHONENUMBER = "phonenumber";
+    public static final String COLUMN_FRIEND_USERNAME = "username";
 
     private static final String DATABASE_NAME = "vibes.db";
     private static final int DATABASE_VERSION = 1;
 
     private static final String CREATE_VIBES = "create table "
             + TABLE_VIBE + "(" + COLUMN_ID
-            + " integer primary key autoincrement, " + COLUMN_VIBE_CONTACTID
+            + " integer primary key autoincrement, " + COLUMN_VIBE_FRIENDID
             + " integer not null, " + COLUMN_VIBE_SENT
             + " integer not null, " + COLUMN_VIBE_VIBETYPE
             + " text not null, "
-            + " FOREIGN KEY(" + COLUMN_VIBE_CONTACTID + ") REFERENCES " + TABLE_CONTACT + "(" + COLUMN_ID + ")";
+            + " FOREIGN KEY(" + COLUMN_VIBE_FRIENDID + ") REFERENCES " + TABLE_FRIEND + "(" + COLUMN_ID + "))";
 
-    private static final String CREATE_CONTACTS = "create table "
-            + TABLE_CONTACT + "(" + COLUMN_ID
-            + " integer primary key autoincrement, " + COLUMN_CONTACT_PHONENUMBER
-            + " text not null, " + COLUMN_CONTACT_USERNAME
+    private static final String CREATE_FRIENDS = "create table "
+            + TABLE_FRIEND + "(" + COLUMN_ID
+            + " integer primary key autoincrement, " + COLUMN_FRIEND_PHONENUMBER
+            + " text not null, " + COLUMN_FRIEND_USERNAME
             + " text not null);";
 
     public VibesSQLiteHelper(Context context) {
@@ -42,7 +42,7 @@ public class VibesSQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database) {
         database.execSQL(CREATE_VIBES);
-        database.execSQL(CREATE_CONTACTS);
+        database.execSQL(CREATE_FRIENDS);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class VibesSQLiteHelper extends SQLiteOpenHelper {
                 "Upgrading database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_VIBE);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FRIEND);
         onCreate(db);
     }
 }
