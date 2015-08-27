@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -55,9 +56,19 @@ public class FriendsFragment extends Fragment {
 
         mFriendList.setAdapter(adapter);
 
+        InitialiseListItemListener();
+
         mVibesDataSource.close();
         mFriendsDataSource.close();
         TextView friendsTextView = (TextView) rootView.findViewById(R.id.vibes_label);
         return rootView;
     }
-}
+
+    private void InitialiseListItemListener(){
+        mFriendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+
+            }
+        }
+    }

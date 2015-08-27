@@ -53,42 +53,30 @@ public class RegisterActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        deviceGuidSettingName = getResources().getString(R.string.device_guid_variable_name);
+        setContentView(R.layout.activity_register);
 
-        SharedPreferences settings = getPreferences(0);
-        String deviceGuid = settings.getString(deviceGuidSettingName, null);
-
-        if (deviceGuid != null && !deviceGuid.isEmpty()) {
-            openMainActivity();
-
-            return;
-        } else {
-
-            setContentView(R.layout.activity_register);
-
-            mPhoneNumberView = (EditText) findViewById(R.id.phoneNumber);
-            mPhoneNumberView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                    if (id == R.id.register || id == EditorInfo.IME_NULL) {
-                        attemptVerify();
-                        return true;
-                    }
-                    return false;
-                }
-            });
-
-            Button mRegisterPhoneNumberButton = (Button) findViewById(R.id.register_phone_number_button);
-            mRegisterPhoneNumberButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        mPhoneNumberView = (EditText) findViewById(R.id.phoneNumber);
+        mPhoneNumberView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if (id == R.id.register || id == EditorInfo.IME_NULL) {
                     attemptVerify();
+                    return true;
                 }
-            });
+                return false;
+            }
+        });
 
-            mLoginFormView = findViewById(R.id.register_form);
-            //mProgressView = findViewById(R.id.login_progress);
-        }
+        Button mRegisterPhoneNumberButton = (Button) findViewById(R.id.register_phone_number_button);
+        mRegisterPhoneNumberButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptVerify();
+            }
+        });
+
+        mLoginFormView = findViewById(R.id.register_form);
+        //mProgressView = findViewById(R.id.login_progress);
     }
 
     void openMainActivity() {
