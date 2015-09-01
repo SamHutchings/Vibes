@@ -1,5 +1,6 @@
 package com.vibes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -34,7 +35,8 @@ public class FriendsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {mVibesDataSource = new VibesDataSource(getActivity());
+                             Bundle savedInstanceState) {
+        mVibesDataSource = new VibesDataSource(getActivity());
 
         View rootView = inflater.inflate(R.layout.friends_fragment, container, false);
 
@@ -45,12 +47,11 @@ public class FriendsFragment extends Fragment {
         try {
             mFriendsDataSource.open();
             friends = mFriendsDataSource.getAllFriends();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             Log.w("vibes", "FRIENDS FRAGMNET FAILED");
         }
 
-        adapter=new ArrayAdapter<Friend>(getActivity(),
+        adapter = new ArrayAdapter<Friend>(getActivity(),
                 android.R.layout.simple_list_item_1,
                 friends);
 
@@ -64,11 +65,13 @@ public class FriendsFragment extends Fragment {
         return rootView;
     }
 
-    private void InitialiseListItemListener(){
+    private void InitialiseListItemListener() {
         mFriendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
-        }
+        });
     }
+}
