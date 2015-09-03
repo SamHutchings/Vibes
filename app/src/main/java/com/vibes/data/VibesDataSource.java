@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -142,7 +143,7 @@ public class VibesDataSource {  // Database fields
         } catch (SQLException e) {
 
         } catch (ParseException e) {
-
+            vibe.setDate(new Date());
         }
 
         mFriendsDataSource.close();
