@@ -10,6 +10,8 @@ import com.vibes.domain.Vibe;
 import com.vibes.enums.VibeType;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,8 +136,12 @@ public class VibesDataSource {  // Database fields
             vibe.setId(cursor.getLong(0));
             vibe.setVibeType(VibeType.valueOf(cursor.getString(2)));
             vibe.setSent(cursor.getInt(3) != 0);
-            vibe.sentFriend(friend);
+            vibe.setFriend(friend);
+            vibe.setDate(new SimpleDateFormat().parse(cursor.getString(4)));
+
         } catch (SQLException e) {
+
+        } catch (ParseException e) {
 
         }
 

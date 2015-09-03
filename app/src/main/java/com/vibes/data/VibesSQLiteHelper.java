@@ -15,6 +15,7 @@ public class VibesSQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_VIBE_FRIENDID = "contactid";
     public static final String COLUMN_VIBE_VIBETYPE = "vibetype";
     public static final String COLUMN_VIBE_SENT = "sent";
+    public static final String COLUMN_VIBE_DATE = "date";
     public static final String COLUMN_FRIEND_PHONENUMBER = "phonenumber";
     public static final String COLUMN_FRIEND_USERNAME = "username";
 
@@ -26,6 +27,7 @@ public class VibesSQLiteHelper extends SQLiteOpenHelper {
             + " integer primary key autoincrement, " + COLUMN_VIBE_FRIENDID
             + " integer not null, " + COLUMN_VIBE_SENT
             + " integer not null, " + COLUMN_VIBE_VIBETYPE
+            + " datetime not null, " + COLUMN_VIBE_DATE
             + " text not null, "
             + " FOREIGN KEY(" + COLUMN_VIBE_FRIENDID + ") REFERENCES " + TABLE_FRIEND + "(" + COLUMN_ID + "))";
 
