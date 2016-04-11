@@ -3,7 +3,8 @@
     <string name="app_name">Vibes</string>
     <string name="device_guid_variable_name">deviceGuid</string>
 
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Vibes</string>
+    <string name="title_activity_register">Register</string>
 
     <string name="friends_menu_title">Friends</string>
     <string name="contacts_menu_title">Contacts</string>
