@@ -140,12 +140,10 @@ public class VibesDataSource {  // Database fields
             vibe.setVibeType(VibeType.valueOf(cursor.getString(2)));
             vibe.setSent(cursor.getInt(3) != 0);
             vibe.setFriend(friend);
-            vibe.setDate(new SimpleDateFormat().parse(cursor.getString(4)));
+            vibe.setDate(new Date(cursor.getLong(4)));
 
         } catch (SQLException e) {
 
-        } catch (ParseException e) {
-            vibe.setDate(new Date());
         }
 
         mFriendsDataSource.close();
