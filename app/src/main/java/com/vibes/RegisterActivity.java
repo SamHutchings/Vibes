@@ -54,6 +54,7 @@ public class RegisterActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_register);
+        deviceGuidSettingName = getResources().getString(R.string.device_guid_variable_name);
 
         mPhoneNumberView = (EditText) findViewById(R.id.phoneNumber);
         mPhoneNumberView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
