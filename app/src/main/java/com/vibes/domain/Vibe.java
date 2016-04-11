@@ -11,9 +11,9 @@ public class Vibe {
     private long id;
     private VibeType Type;
     private long ContactId;
+    private long Date;
     private Boolean Sent;
     private Friend friend;
-    private Date date;
 
     public long getId() {
         return id;
@@ -56,15 +56,19 @@ public class Vibe {
     }
 
     public Date getDate() {
-        return date;
+        return new Date(Date);
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.Date = date.getTime();
     }
 
     @Override
     public String toString() {
-        return this.Type + " vibe " + this.id + " to " + this.getFriend().toString();
+        if(this.friend != null) {
+            return this.Type + " vibe " + this.id + " to " + this.getFriend().toString();
+        }
+
+        return this.Type + " vibe " + this.id;
     }
 }

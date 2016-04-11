@@ -47,6 +47,8 @@ public class VibesDataSource {  // Database fields
         values.put(VibesSQLiteHelper.COLUMN_VIBE_FRIENDID, vibe.getContactId());
         values.put(VibesSQLiteHelper.COLUMN_VIBE_VIBETYPE, vibe.getVibeType().toString());
         values.put(VibesSQLiteHelper.COLUMN_VIBE_SENT, vibe.getSent());
+        values.put(VibesSQLiteHelper.COLUMN_VIBE_DATE, vibe.getDate().getTime());
+
         long insertId = database.insert(VibesSQLiteHelper.TABLE_VIBE, null,
                 values);
         Cursor cursor = database.query(VibesSQLiteHelper.TABLE_VIBE,
