@@ -53,42 +53,31 @@ public class RegisterActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_register);
         deviceGuidSettingName = getResources().getString(R.string.device_guid_variable_name);
 
-        SharedPreferences settings = getPreferences(0);
-        String deviceGuid = settings.getString(deviceGuidSettingName, null);
-
-        if (deviceGuid != null && !deviceGuid.isEmpty()) {
-            openMainActivity();
-
-            return;
-        } else {
-
-            setContentView(R.layout.activity_register);
-
-            mPhoneNumberView = (EditText) findViewById(R.id.phoneNumber);
-            mPhoneNumberView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                    if (id == R.id.register || id == EditorInfo.IME_NULL) {
-                        attemptVerify();
-                        return true;
-                    }
-                    return false;
-                }
-            });
-
-            Button mRegisterPhoneNumberButton = (Button) findViewById(R.id.register_phone_number_button);
-            mRegisterPhoneNumberButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        mPhoneNumberView = (EditText) findViewById(R.id.phoneNumber);
+        mPhoneNumberView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if (id == R.id.register || id == EditorInfo.IME_NULL) {
                     attemptVerify();
+                    return true;
                 }
-            });
+                return false;
+            }
+        });
 
-            mLoginFormView = findViewById(R.id.register_form);
-            //mProgressView = findViewById(R.id.login_progress);
-        }
+        Button mRegisterPhoneNumberButton = (Button) findViewById(R.id.register_phone_number_button);
+        mRegisterPhoneNumberButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptVerify();
+            }
+        });
+
+        mLoginFormView = findViewById(R.id.register_form);
+        //mProgressView = findViewById(R.id.login_progress);
     }
 
     void openMainActivity() {
@@ -137,42 +126,6 @@ public class RegisterActivity extends Activity {
     }
 
     /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    public void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
-
-    /**
      * Represents an asynchronous registration task used to authenticate
      * the user.
      */
@@ -207,7 +160,6 @@ public class RegisterActivity extends Activity {
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-            showProgress(false);
 
             if (success) {
                 finish();
@@ -220,7 +172,6 @@ public class RegisterActivity extends Activity {
         @Override
         protected void onCancelled() {
             mAuthTask = null;
-            showProgress(false);
         }
     }
 }

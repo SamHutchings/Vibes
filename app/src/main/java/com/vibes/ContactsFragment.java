@@ -63,7 +63,7 @@ public class ContactsFragment extends Fragment {
                 friendToSend = mFriendsDataSource.createFriend(friend);
             } else {
                 Random r = new Random();
-                int i1 = r.nextInt(friends.size() + 1);
+                int i1 = r.nextInt(friends.size());
 
                 friendToSend = friends.get(i1);
             }
@@ -79,6 +79,7 @@ public class ContactsFragment extends Fragment {
             }
 
             newVibe.setSent(true);
+            newVibe.setDate(c.getTime());
 
             newVibe = mVibesDataSource.createVibe(newVibe);
         } catch (SQLException e) {

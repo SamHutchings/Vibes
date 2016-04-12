@@ -2,6 +2,8 @@ package com.vibes.domain;
 
 import com.vibes.enums.VibeType;
 
+import java.util.Date;
+
 /**
  * Represents a vibe sent or received by the user
  */
@@ -9,6 +11,7 @@ public class Vibe {
     private long id;
     private VibeType Type;
     private long ContactId;
+    private long Date;
     private Boolean Sent;
     private Friend friend;
 
@@ -48,12 +51,24 @@ public class Vibe {
         return friend;
     }
 
-    public void sentFriend(Friend friend) {
+    public void setFriend(Friend friend) {
         this.friend = friend;
+    }
+
+    public Date getDate() {
+        return new Date(Date);
+    }
+
+    public void setDate(Date date) {
+        this.Date = date.getTime();
     }
 
     @Override
     public String toString() {
-        return this.Type + " vibe " + this.id + " to " + this.getFriend().toString();
+        if(this.friend != null) {
+            return this.Type + " vibe " + this.id + " to " + this.getFriend().toString();
+        }
+
+        return this.Type + " vibe " + this.id;
     }
 }

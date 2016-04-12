@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="top"
-        android:background="#5757FF"
+        android:background="#7EDB6E"
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
         android:textColor="#fff" />

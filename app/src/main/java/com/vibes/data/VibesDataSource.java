@@ -10,7 +10,10 @@ import com.vibes.domain.Vibe;
 import com.vibes.enums.VibeType;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,7 +27,8 @@ public class VibesDataSource {  // Database fields
     private String[] allColumns = {VibesSQLiteHelper.COLUMN_ID,
             VibesSQLiteHelper.COLUMN_VIBE_FRIENDID,
             VibesSQLiteHelper.COLUMN_VIBE_VIBETYPE,
-            VibesSQLiteHelper.COLUMN_VIBE_SENT};
+            VibesSQLiteHelper.COLUMN_VIBE_SENT,
+            VibesSQLiteHelper.COLUMN_VIBE_DATE};
 
     public VibesDataSource(Context context) {
         dbHelper = new VibesSQLiteHelper(context);
@@ -44,6 +48,8 @@ public class VibesDataSource {  // Database fields
         values.put(VibesSQLiteHelper.COLUMN_VIBE_FRIENDID, vibe.getContactId());
         values.put(VibesSQLiteHelper.COLUMN_VIBE_VIBETYPE, vibe.getVibeType().toString());
         values.put(VibesSQLiteHelper.COLUMN_VIBE_SENT, vibe.getSent());
+        values.put(VibesSQLiteHelper.COLUMN_VIBE_DATE, vibe.getDate().getTime());
+
         long insertId = database.insert(VibesSQLiteHelper.TABLE_VIBE, null,
                 values);
         Cursor cursor = database.query(VibesSQLiteHelper.TABLE_VIBE,
@@ -108,6 +114,24 @@ public class VibesDataSource {  // Database fields
         return vibes;
     }
 
+    public List<Vibe> getLastVibesForContact(long contactId) {
+
+        List<Vibe> vibes = new ArrayList<Vibe>();
+
+        Cursor cursor = database.query(VibesSQLiteHelper.TABLE_VIBE,
+                allColumns, null, null, null, null, VibesSQLiteHelper.COLUMN_ID + " DESC", "5");
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Vibe vibe = cursorToVibe(cursor);
+            vibes.add(vibe);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+        return vibes;
+    }
+
     private Vibe cursorToVibe(Cursor cursor) {
         Vibe vibe = new Vibe();
         try {
@@ -116,7 +140,9 @@ public class VibesDataSource {  // Database fields
             vibe.setId(cursor.getLong(0));
             vibe.setVibeType(VibeType.valueOf(cursor.getString(2)));
             vibe.setSent(cursor.getInt(3) != 0);
-            vibe.sentFriend(friend);
+            vibe.setFriend(friend);
+            vibe.setDate(new Date(cursor.getLong(4)));
+
         } catch (SQLException e) {
 
         }
