@@ -27,7 +27,8 @@ public class VibesDataSource {  // Database fields
     private String[] allColumns = {VibesSQLiteHelper.COLUMN_ID,
             VibesSQLiteHelper.COLUMN_VIBE_FRIENDID,
             VibesSQLiteHelper.COLUMN_VIBE_VIBETYPE,
-            VibesSQLiteHelper.COLUMN_VIBE_SENT};
+            VibesSQLiteHelper.COLUMN_VIBE_SENT,
+            VibesSQLiteHelper.COLUMN_VIBE_DATE};
 
     public VibesDataSource(Context context) {
         dbHelper = new VibesSQLiteHelper(context);

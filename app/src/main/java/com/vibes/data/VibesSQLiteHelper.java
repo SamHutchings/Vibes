@@ -27,7 +27,7 @@ public class VibesSQLiteHelper extends SQLiteOpenHelper {
             + " integer primary key autoincrement, " + COLUMN_VIBE_FRIENDID
             + " integer not null, " + COLUMN_VIBE_SENT
             + " integer not null, " + COLUMN_VIBE_DATE
-            + " datetime not null, " + COLUMN_VIBE_VIBETYPE
+            + " integer not null, " + COLUMN_VIBE_VIBETYPE
             + " text not null, "
             + " FOREIGN KEY(" + COLUMN_VIBE_FRIENDID + ") REFERENCES " + TABLE_FRIEND + "(" + COLUMN_ID + "))";
 
